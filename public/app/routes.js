@@ -10,6 +10,11 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 authenticated : false
             })
 
+            .when('/login', {
+                templateUrl : '/app/views/users/login.html',
+                authenticated : false
+            })
+
             .when('/logout', {
                 templateUrl : '/app/views/users/logout.html',
                 authenticated : false

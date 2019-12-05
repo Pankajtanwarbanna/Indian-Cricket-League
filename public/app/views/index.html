@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Logo -->
-    <link rel="shortcut icon" type="image/png" href="assets/images/logo/logo.png"/>
+    <link rel="shortcut icon" type="image/png" href="/assets/images/logo/logo.png"/>
 
 
     <title>Indian Cricket League</title>
@@ -14,12 +14,11 @@
     <!-- Style sheets -->
     <link rel="stylesheet" href="assets/css/style.css"/>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <!-- Angularjs File -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
@@ -45,45 +44,55 @@
 
 </head>
 
-<body ng-app="userApp" ng-controller="mainCtrl as main">
+<body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
 
-    <div class="container">
-        <div class="row cb-slideshow-text-container">
-            <div class="tm-content">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/images/logo/logo.png" alt="ICL Logo" width="50px"> Cricket League
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="/register" class="nav-link" ng-show="!main.isLoggedIn"> Register </a>
+                </li>
 
-                <nav class="navbar navbar-inverse">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand prata-font" href="/">Indian Cricket League</a>
-                        </div>
-                        <div class="collapse navbar-collapse" id="myNavbar">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="/register" class="prata-font" ng-show="!main.isLoggedIn"> JOIN US </a></li>
-                                <li><a href="#" class="prata-font" ng-show="main.isLoggedIn" ng-click="main.logout();"> LOGOUT </a></li>
-                                <li><a href="/users/{{main.username}}" class="prata-font" ng-show="main.isLoggedIn"> HELLO {{main.name }}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" ng-show="!main.isLoggedIn">Login </a>
+                </li>
 
-                <!-- Angular view -->
-                <div class="ng-view"></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" class="prata-font" ng-show="main.isLoggedIn" ng-click="main.logout();">Logout </a>
+                </li>
 
-                <!-- Home page -->
-                <div ng-show="main.home">
-                    <h1>
-                        Hey there!
-                    </h1>
-                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/{{main.username}}" ng-show="main.isLoggedIn">Hello {{ main.name }} </a>
+                </li>
 
-            </div>
+            </ul>
         </div>
-    </div>
+    </nav>
+    <main role="main" class="container">
+        <div class="ng-view mt-5"></div>
+        <div ng-show="main.home" class="mt-5">
+            <h2>Welcome to Indian Cricket League!</h2>
+        </div>
+    </main>
+
+    <!--<footer class="footer">
+        <div class="container text-center">
+            <p>Made with <i class="fa fa-heart text-danger"></i> &nbsp;by <a href="https://github.com/Pankajtanwarbanna" target="_blank"> Pankaj Tanwar Banna</a> </p>
+        </div>
+    </footer>-->
+
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
