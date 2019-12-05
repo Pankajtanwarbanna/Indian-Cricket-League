@@ -79,7 +79,7 @@ var userSchema = new mongoose.Schema({
 
 userSchema.pre('save', function (next) {
 
-    var user = this;
+    let user = this;
 
     if(!user.isModified('password')) return next();
 
@@ -97,7 +97,7 @@ userSchema.pre('save', function (next) {
 
 // Mongoose title case plugin
 userSchema.plugin(titlize, {
-    paths: [ 'name' , 'location'], // Array of paths
+    paths: [ 'name' ], // Array of paths
 });
 
 // Password compare method

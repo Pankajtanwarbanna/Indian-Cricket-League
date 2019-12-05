@@ -1,18 +1,17 @@
-/*
-    API written by - Pankaj Tanwar
-*/
+// By Pankaj Tanwar ( 5 Dec 2019 )
 var User = require('../models/user');
+let auth = require('../auth/authPermission');
 var jwt = require('jsonwebtoken');
-var secret = 'zulu';
+var secret = 'Indian-Cricket-League';
 var nodemailer = require('nodemailer');
-var sgTransport = require('nodemailer-sendgrid-transport');
+var sgTransport = require('nodemailer-sendgrid-transport'); // for sendgrid
 
 module.exports = function (router){
 
     // Nodemailer-sandgrid stuff
     var options = {
         auth: {
-            api_key: 'YOUR_API_KEY'
+            api_key: 'API_KEY' // need to put api key here
         }
     };
 
@@ -26,7 +25,7 @@ module.exports = function (router){
         user.username = req.body.username;
         user.email = req.body.email;
         user.password = req.body.password;
-        user.temporarytoken = jwt.sign({ email : user.email , username : user.username }, secret , { expiresIn : '24h' });
+        user.temporarytoken = jwt.sign({ email : user.email , username : user.username }, secret);
 
         //console.log(req.body);
         if(!user.name || !user.email || !user.password || !user.username) {
@@ -90,26 +89,28 @@ module.exports = function (router){
                 } else {
 
                     var email = {
-                        from: 'Polymath Registration, support@polymath.com',
+                        from: 'support@icl.com',
                         to: user.email,
-                        subject: 'Activation Link - Polymath Registration',
-                        text: 'Hello '+ user.name + 'Thank you for registering with us.Please find the below activation link Activation link Thank you Pankaj Tanwar CEO, Polymath',
-                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>Thank you for registering with us.Please find the below activation link<br><br><a href="http://localhost:8080/activate/'+ user.temporarytoken+'">Activation link</a><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                        subject: 'Activation Link - ICL Registration',
+                        text: 'Hello '+ user.name + 'Thank you for registering with us.Please find the below activation link Activation link Thank you Pankaj Tanwar',
+                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>Thank you for registering with us.Please find the below activation link<br><br><a href="http://localhost:8000/activate/'+ user.temporarytoken+'">Activation link</a><br><br>Thank you<br>Pankaj Tanwar'
                     };
 
                     client.sendMail(email, function(err, info){
                         if (err ){
                             console.log(err);
+                            res.json({
+                                success : false,
+                                message : 'Something went wrong in email server!'
+                            })
                         }
                         else {
                             console.log('Message sent: ' + info.response);
+                            res.json({
+                                success : true,
+                                message : 'Account registered! Please check your E-mail inbox for the activation link.'
+                            });
                         }
-                    });
-
-
-                    res.json({
-                        success : true,
-                        message : 'Account registered! Please check your E-mail inbox for the activation link.'
                     });
                 }
             });
@@ -151,7 +152,7 @@ module.exports = function (router){
                             var token = jwt.sign({
                                 email: user.email,
                                 username: user.username
-                            }, secret, {expiresIn: '24h'});
+                            }, secret);
                             res.json({
                                 success: true,
                                 message: 'User authenticated.',
@@ -204,29 +205,36 @@ module.exports = function (router){
                         user.save(function (err) {
                             if (err) {
                                 console.log(err);
+                                res.json({
+                                    success : false,
+                                    message : 'Something went wrong!'
+                                })
                             } else {
 
                                 var email = {
-                                    from: 'Polymath Registration, support@polymath.com',
+                                    from: 'support@icl.com',
                                     to: user.email,
-                                    subject: 'Activation activated',
-                                    text: 'Hello ' + user.name + 'Your account has been activated.Thank you Pankaj Tanwar CEO, Polymath',
-                                    html: 'Hello <strong>' + user.name + '</strong>,<br><br> Your account has been activated.<br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                                    subject: 'Account activated',
+                                    text: 'Hello ' + user.name + 'Your account has been activated.Thank you Pankaj Tanwar',
+                                    html: 'Hello <strong>' + user.name + '</strong>,<br><br> Your account has been activated.<br><br>Thank you<br>Pankaj Tanwar'
                                 };
 
                                 client.sendMail(email, function (err, info) {
                                     if (err) {
                                         console.log(err);
+                                        res.json({
+                                            success : false,
+                                            message : 'Something went wrong with Email server.'
+                                        })
                                     }
                                     else {
                                         console.log('Message sent: ' + info.response);
+                                        res.json({
+                                            success: true,
+                                            message: 'Account activated.'
+                                        })
                                     }
                                 });
-
-                                res.json({
-                                    success: true,
-                                    message: 'Account activated.'
-                                })
 
                             }
                         });
@@ -290,7 +298,7 @@ module.exports = function (router){
             user.temporarytoken = jwt.sign({
                 email: user.email,
                 username: user.username
-            }, secret, {expiresIn: '24h'});
+            }, secret);
 
             user.save(function (err) {
                 if(err) {
@@ -298,25 +306,28 @@ module.exports = function (router){
                 } else {
 
                     var email = {
-                        from: 'Polymath Registration, support@polymath.com',
+                        from: 'support@icl.com',
                         to: user.email,
-                        subject: 'Activation Link request - Polymath Registration',
-                        text: 'Hello '+ user.name + 'You requested for the new activation link.Please find the below activation link Activation link Thank you Pankaj Tanwar CEO, Polymath',
-                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the new activation link.Please find the below activation link<br><br><a href="http://localhost:8080/activate/'+ user.temporarytoken+'">Activation link</a><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                        subject: 'Activation Link request - ICL Registration',
+                        text: 'Hello '+ user.name + 'You requested for the new activation link.Please find the below activation link Activation link Thank you Pankaj Tanwar',
+                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the new activation link.Please find the below activation link<br><br><a href="http://localhost:8000/activate/'+ user.temporarytoken+'">Activation link</a><br><br>Thank you<br>Pankaj Tanwar'
                     };
 
                     client.sendMail(email, function(err, info){
                         if (err ){
                             console.log(err);
+                            res.json({
+                                success : false,
+                                message : 'Something went wrong with the email server.'
+                            })
                         }
                         else {
                             console.log('Message sent: ' + info.response);
+                            res.json({
+                                success : true,
+                                message : 'Link has been successfully sent to registered email.'
+                            });
                         }
-                    });
-
-                    res.json({
-                        success : true,
-                        message : 'Link has been successfully sent to registered email.'
                     });
 
                 }
@@ -346,25 +357,28 @@ module.exports = function (router){
                 } else if(user) {
 
                     var email = {
-                        from: 'Polymath, support@polymath.com',
+                        from: 'support@icl.com',
                         to: user.email,
-                        subject: 'Forgot Username Request',
-                        text: 'Hello '+ user.name + 'You requested for your username.You username is ' + user.username + 'Thank you Pankaj Tanwar CEO, Polymath',
-                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for your username.You username is <strong>'+ user.username + '</strong><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                        subject: 'Forgot Username Request : ICL',
+                        text: 'Hello '+ user.name + 'You requested for your username.You username is ' + user.username + 'Thank you Pankaj Tanwar',
+                        html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for your username.You username is <strong>'+ user.username + '</strong><br><br>Thank you<br>Pankaj Tanwar'
                     };
 
                     client.sendMail(email, function(err, info){
                         if (err ){
                             console.log(err);
+                            res.json({
+                                success : false,
+                                message : 'Something went wrong with Email server.'
+                            })
                         }
                         else {
                             console.log('Message sent: ' + info.response);
+                            res.json({
+                                success : true,
+                                message : 'Username has been successfully sent to your email.'
+                            });
                         }
-                    });
-
-                    res.json({
-                        success : true,
-                        message : 'Username has been successfully sent to your email.'
                     });
                 } else {
                     res.send(user);
@@ -395,14 +409,10 @@ module.exports = function (router){
                     });
                 } else {
 
-                    console.log(user.temporarytoken);
-
                     user.temporarytoken = jwt.sign({
                         email: user.email,
                         username: user.username
-                    }, secret, {expiresIn: '24h'});
-
-                    console.log(user.temporarytoken);
+                    }, secret);
 
                     user.save(function (err) {
                         if(err) {
@@ -413,25 +423,28 @@ module.exports = function (router){
                         } else {
 
                             var email = {
-                                from: 'Polymath Registration, support@polymath.com',
+                                from: 'support@icl.com',
                                 to: user.email,
-                                subject: 'Forgot Password Request',
-                                text: 'Hello '+ user.name + 'You request for the forgot password.Please find the below link Reset password Thank you Pankaj Tanwar CEO, Polymath',
-                                html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the forgot password. Please find the below link<br><br><a href="http://localhost:8080/forgotPassword/'+ user.temporarytoken+'">Reset password</a><br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                                subject: 'Forgot Password Request : ICL',
+                                text: 'Hello '+ user.name + 'You request for the forgot password.Please find the below link Reset password Thank you Pankaj Tanwar',
+                                html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the forgot password. Please find the below link<br><br><a href="http://localhost:8000/forgotPassword/'+ user.temporarytoken+'">Reset password</a><br><br>Thank you<br>Pankaj Tanwar'
                             };
 
                             client.sendMail(email, function(err, info){
                                 if (err ){
                                     console.log(err);
+                                    res.json({
+                                        success : false,
+                                        message : 'Something went wrong with the email server.'
+                                    })
                                 }
                                 else {
                                     console.log('Message sent: ' + info.response);
+                                    res.json({
+                                        success : true,
+                                        message : 'Link to reset your password has been sent to your registered email.'
+                                    });
                                 }
-                            });
-
-                            res.json({
-                                success : true,
-                                message : 'Link to reset your password has been sent to your registered email.'
                             });
 
                         }
@@ -444,7 +457,7 @@ module.exports = function (router){
         }
     });
 
-    // router to change password
+    // router to change password ( here checking only link )
     router.post('/forgotPassword/:token', function (req,res) {
 
         if(!req.params.token) {
@@ -476,8 +489,6 @@ module.exports = function (router){
     // route to reset password
     router.put('/resetPassword/:token', function (req,res) {
 
-        console.log('api is working fine');
-
         if(!req.body.password) {
             res.json({
                 success : false,
@@ -508,26 +519,29 @@ module.exports = function (router){
                         } else {
 
                             var email = {
-                                from: 'Polymath, support@polymath.com',
+                                from: 'support@icl.com',
                                 to: user.email,
-                                subject: 'Password reset',
-                                text: 'Hello '+ user.name + 'You request for the reset password.Your password has been reset. Thank you Pankaj Tanwar CEO, Polymath',
-                                html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the reset password. Your password has been reset.<br><br>Thank you<br>Pankaj Tanwar<br>CEO, Polymath'
+                                subject: 'Password reset : ICL',
+                                text: 'Hello '+ user.name + 'You request for the reset password.Your password has been reset. Thank you Pankaj Tanwar',
+                                html: 'Hello <strong>'+ user.name + '</strong>,<br><br>You requested for the reset password. Your password has been reset.<br><br>Thank you<br>Pankaj Tanwar'
                             };
 
                             client.sendMail(email, function(err, info){
                                 if (err ){
                                     console.log(err);
+                                    res.json({
+                                        success : false,
+                                        message : 'Something went wrong with the email server.'
+                                    })
                                 }
                                 else {
                                     console.log('Message sent: ' + info.response);
+                                    res.json({
+                                        success : true,
+                                        message : 'Password has been changed successfully.'
+                                    })
                                 }
                             });
-
-                            res.json({
-                                success : true,
-                                message : 'Password has been changed successfully.'
-                            })
 
                         }
                     })
@@ -599,328 +613,6 @@ module.exports = function (router){
                 })
             }
         })
-    });
-
-    // get all users
-    router.get('/management', function (req, res) {
-
-        User.find({}, function (err, users) {
-
-            if(err) throw err;
-            User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-
-                if(err) throw err;
-                if(!mainUser) {
-                    res.json({
-                        success : false,
-                        message : 'User not found.'
-                    });
-                } else {
-                    if(!users) {
-                        res.json({
-                            success : false,
-                            message : 'Users not found.'
-                        });
-                    } else {
-                        res.json({
-                            success : true,
-                            users : users,
-                            permission : mainUser.permission
-                        })
-                    }
-                }
-            })
-        })
-    });
-
-    // delete a user form database
-    router.delete('/management/:username', function (req,res) {
-
-        var deletedUser = req.params.username;
-
-        User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({
-                    success : false,
-                    message : 'User not found.'
-                });
-            } else {
-                if(mainUser.permission !== 'admin') {
-                    res.json({
-                        success : false,
-                        message : 'Insufficient permission'
-                    });
-                } else {
-                    User.findOneAndRemove({ username : deletedUser }, function (err,user) {
-                        if(err) throw err;
-
-                        res.json({
-                            success : true,
-                        });
-                    });
-                }
-            }
-        })
-    });
-
-    // route to edit user
-    router.get('/edit/:id', function (req,res) {
-        var editedUser = req.params.id;
-
-        User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({
-                    success : false,
-                    message : 'User not found...'
-                });
-            } else {
-                if(mainUser.permission === 'admin') {
-
-                    User.findOne({ _id : editedUser }, function (err, user) {
-
-                        if(err) throw err;
-
-                        if(!user) {
-                            res.json({
-                                success : false,
-                                message : 'User not found.'
-                            });
-                        } else {
-                            res.json({
-                                success : true,
-                                user : user
-                            })
-                        }
-
-                    })
-
-                } else {
-                    res.json({
-                        success : false,
-                        message : 'Insufficient permission.'
-                    })
-                }
-            }
-        })
-    });
-
-    // update user details
-    router.put('/edit', function (req,res) {
-
-        var editedUser = req.body._id;
-
-        if(req.body.name) {
-            var newName = req.body.name;
-        }
-        if(req.body.username) {
-            var newUsername = req.body.username;
-        }
-        if(req.body.email) {
-            var newEmail = req.body.email;
-        }
-        if(req.body.permission) {
-            var newPermission = req.body.permission;
-        }
-
-        User.findOne({ username : req.decoded.username }, function (err,mainUser) {
-            if(err) throw err;
-
-            if(!mainUser) {
-                res.json({
-                    success : false,
-                    message : 'User not found'
-                });
-            } else {
-                if(mainUser.permission === 'admin') {
-
-                    // update name
-                    if(newName) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                user.name = newName;
-                                user.save(function (err) {
-                                    if(err) {
-                                        if(err.errors.name) {
-                                            res.json({
-                                                success : false,
-                                                message : err.errors.name.message
-                                            })
-                                        } else {
-                                            res.json({
-                                                success : false,
-                                                message : 'Error! Please try again.'
-                                            })
-                                        }
-                                    }
-
-                                    else {
-
-                                        res.json({
-                                            success : true,
-                                            message : 'Name has been updated.'
-                                        });
-                                    }
-
-                                })
-                            }
-
-                        })
-                    }
-
-                    // update username
-                    if(newUsername) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                user.username = newUsername;
-                                user.save(function (err) {
-                                    if(err) {
-                                        if(err.errors) {
-                                            res.json({
-                                                success : false,
-                                                message : err.errors.username.message
-                                            })
-                                        } else {
-                                            res.json({
-                                                success : false,
-                                                message : 'Username is not unique.'
-                                            })
-                                        }
-                                    }
-
-                                    res.json({
-                                        success : true,
-                                        message : 'Username has been updated.'
-                                    })
-                                })
-                            }
-
-                        })
-                    }
-
-                    // update email
-                    if(newEmail) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                user.email = newEmail;
-                                user.save(function (err) {
-                                    if(err) {
-                                        if(err.errors) {
-                                            console.log(err.errors);
-                                            res.json({
-                                                success : false,
-                                                message : err.errors.email.message
-                                            })
-                                        } else {
-                                            res.json({
-                                                success : false,
-                                                message : 'User is already registered with us.'
-                                            })
-                                        }
-                                    } else {
-                                        res.json({
-                                            success : true,
-                                            message : 'Email has been updated.'
-                                        });
-                                    }
-
-                                })
-                            }
-
-                        })
-                    }
-
-                    // update permission
-                    if(newPermission) {
-                        User.findOne({ _id : editedUser }, function (err,user) {
-                            if(err) throw err;
-
-                            if(!user) {
-                                res.json({
-                                    success : false,
-                                    message : 'User not found.'
-                                });
-                            } else {
-                                console.log(user.permission);
-                                console.log(mainUser.permission);
-
-                                if(user.permission === 'user' && mainUser.permission === 'admin') {
-                                    user.permission = 'admin';
-
-                                    user.save(function (err) {
-                                        if(err) {
-                                            res.json({
-                                                success : false,
-                                                message : 'Can not upgrade to admin'
-                                            });
-                                        } else {
-                                            res.json({
-                                                success : true,
-                                                message : 'Successfully upgraded to admin.'
-                                            })
-                                        }
-                                    });
-
-                                } else if(user.permission === 'user' && mainUser.permission === 'user') {
-                                    res.json({
-                                        success : false,
-                                        message : 'Insufficient permission.'
-                                    })
-                                } else if(user.permission === 'admin' && mainUser.permission === 'admin') {
-                                    res.json({
-                                        success : false,
-                                        message : 'Role is already admin.'
-                                    })
-                                } else if (user.permission === 'admin' && mainUser.permission === 'user') {
-                                    res.json({
-                                        success : false,
-                                        message : 'Insufficient permission.'
-                                    })
-                                } else {
-                                    res.json({
-                                        success : true,
-                                        message : 'Please try again later.'
-                                    })
-                                }
-                            }
-
-                        });
-                    }
-
-
-                } else {
-                    res.json({
-                        success : false,
-                        message : 'Insufficient permission.'
-                    })
-                }
-            }
-        });
     });
 
     return router;

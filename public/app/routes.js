@@ -12,28 +12,6 @@ var app = angular.module('userRoutes', ['ngRoute'])
 
             .when('/logout', {
                 templateUrl : '/app/views/users/logout.html',
-                authenticated : false,
-                controller : 'editCtrl',
-                controllerAs : 'edit'
-            })
-
-            .when('/users/:username', {
-                templateUrl : '/app/views/users/userProfile.html',
-                authenticated : true
-            })
-
-            .when('/about', {
-                templateUrl : '/app/views/pages/about.html',
-                authenticated : false
-            })
-
-            .when('/contact', {
-                templateUrl : '/app/views/pages/contact.html',
-                authenticated : false
-            })
-
-            .when('/services', {
-                templateUrl : '/app/views/pages/services.html',
                 authenticated : false
             })
 
@@ -65,22 +43,12 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 controllerAs : 'reset'
             })
 
-            .when('/management', {
-                templateUrl : 'app/views/admin/management.html',
+            .when('/profile', {
+                templateUrl : 'app/views/users/profile.html',
                 authenticated : true,
-                controller : 'managementCtrl',
-                controllerAs : 'management',
-                permission : 'admin'
+                controller : 'profileCtrl',
+                controllerAs : 'profile'
             })
-
-            .when('/edit/:id', {
-                templateUrl : 'app/views/admin/edit.html',
-                authenticated : true,
-                controller : 'editCtrl',
-                controllerAs : 'edit',
-                permission : 'admin'
-            })
-
 
             .otherwise( { redirectTo : '/'});
 
@@ -121,7 +89,7 @@ app.run(['$rootScope','auth','$location', 'user', function ($rootScope,auth,$loc
                 }
 
             } /*else {
-                console.log('auth doesnot matter');
+                console.log('auth does not matter');
             }
             */
         } /*else {

@@ -1,7 +1,7 @@
 var express  = require('express');
 var app = express();
 var morgan = require('morgan');             // middleware to log http requests
-var port = 8000 || process.env.PORT;
+var port = process.env.PORT || 8000;
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var router = express.Router();
@@ -17,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api', apiRoutes);
 
 // connecting to mongo database
-mongoose.connect('mongodb://localhost:27017/MEAN-login-signup-app', { useNewUrlParser: true }, function (err) {
+mongoose.connect('mongodb://localhost:27017/Indian-Cricket-League', { useNewUrlParser: true , useUnifiedTopology: true}, function (err) {
     if(err) {
         console.log(err);
     } else {
@@ -31,5 +31,5 @@ app.get('*', function (req,res) {
 
 // server listening on port 8000
 app.listen(port, function () {
-    console.log('Server running on port 8000');
+    console.log('Server running on port ' + port);
 });
