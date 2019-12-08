@@ -55,6 +55,24 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 controllerAs : 'profile'
             })
 
+            .when('/upload-csv', {
+                templateUrl : 'app/views/admin/upload-csv.html',
+                authenticated : true,
+                controller : 'uploadCSVCtrl',
+                controllerAs : 'uploadCSV',
+                permission : 'admin'
+            })
+
+            .when('/editMatch/:matchID', {
+                templateUrl : 'app/views/admin/editMatch.html',
+                authenticated : true,
+                controller : 'editMatchCtrl',
+                controllerAs : 'editMatch',
+                permission : 'admin'
+            })
+
+
+
             .otherwise( { redirectTo : '/'});
 
         $locationProvider.html5Mode({

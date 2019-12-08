@@ -51,5 +51,10 @@ angular.module('userServices',[])
         return $http.get('/api/permission');
     };
 
+    // get all matches
+    userFactory.getAllMatches = function () {
+        return $http.get('/api/getAllMatches');
+    };
+
     return userFactory;
 });

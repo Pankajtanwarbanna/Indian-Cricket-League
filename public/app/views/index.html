@@ -28,13 +28,18 @@
 
     <!-- Angular Controller files -->
     <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/adminCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
-    <script src="app/controllers/managementCtrl.js"></script>
     <script src="app/controllers/emailCtrl.js"></script>
+
+    <!-- Angular Directives -->
+    <script src="app/directives/fileModel.js"></script>
 
     <!-- Angular Services -->
     <script src="app/services/userServices.js"></script>
+    <script src="app/services/adminServices.js"></script>
     <script src="app/services/authServices.js"></script>
+    <script src="app/services/uploadFileService.js"></script>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -56,19 +61,23 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="/register" class="nav-link" ng-show="!main.isLoggedIn"> Register </a>
+                    <a href="/register" class="nav-link" ng-show="!main.isLoggedIn"><i class="fa fa-user-plus"></i> Register </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/login" ng-show="!main.isLoggedIn">Login </a>
+                    <a class="nav-link" href="/login" ng-show="!main.isLoggedIn"><i class="fa fa-sign-in"></i> Login </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#" class="prata-font" ng-show="main.isLoggedIn" ng-click="main.logout();">Logout </a>
+                    <a class="nav-link" href="/upload-csv" ng-show="main.isLoggedIn && main.authorized"><i class="fa fa-upload"></i> Upload CSV </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/users/{{main.username}}" ng-show="main.isLoggedIn">Hello {{ main.name }} </a>
+                    <a class="nav-link" href="/profile" ng-show="main.isLoggedIn">Hello {{ main.name }} </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" class="prata-font" ng-show="main.isLoggedIn" ng-click="main.logout();"><i class="fa fa-sign-out"></i> Logout </a>
                 </li>
 
             </ul>
@@ -77,10 +86,11 @@
     <main role="main" class="container">
         <div class="ng-view mt-5"></div>
         <div ng-show="main.home" class="mt-5">
-            <h2>Welcome to Indian Cricket League!</h2>
+            <home ng-include="'/app/views/home/home.html'"></home>
         </div>
     </main>
 
+    <!-- Footer -->
     <!--<footer class="footer">
         <div class="container text-center">
             <p>Made with <i class="fa fa-heart text-danger"></i> &nbsp;by <a href="https://github.com/Pankajtanwarbanna" target="_blank"> Pankaj Tanwar Banna</a> </p>

@@ -1,13 +1,13 @@
 let User = require('../models/user');
 
 function ensureAdmin(req, res, next) {
-    if(!req.decoded.email) {
+    if(!req.decoded.username) {
         res.json({
             success : false,
             message : 'You are not logged in.'
         })
     } else {
-        User.findOne({ email : req.decoded.email }).select('permission').lean().exec(function (err, user) {
+        User.findOne({ username : req.decoded.username }).select('permission').lean().exec(function (err, user) {
             if(err) {
                 res.json({
                     success : false,
@@ -35,13 +35,13 @@ function ensureAdmin(req, res, next) {
 }
 
 function ensureUser(req, res, next) {
-    if(!req.decoded.email) {
+    if(!req.decoded.username) {
         res.json({
             success : false,
             message : 'You are not logged in.'
         })
     } else {
-        User.findOne({ email : req.decoded.email }).select('permission').lean().exec(function (err, user) {
+        User.findOne({ username : req.decoded.username }).select('permission').lean().exec(function (err, user) {
             if(err) {
                 res.json({
                     success : false,

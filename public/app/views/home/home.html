@@ -1,0 +1,51 @@
+<h3 class="text-center">Welcome to Indian Cricket League!</h3>
+
+<div class="container-overview mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="row" style="padding: 10px;">
+                    <div class="col-md-4 form-group">
+                        <select class="form-control" ng-model="selectSeason">
+                            <option value="">-- Select Season --</option>
+                            <option ng-value="season" ng-repeat="season in main.seasonArray"> {{ season }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control" ng-model="selectCity">
+                            <option value="">-- Select City --</option>
+                            <option value="{{ city }}" ng-repeat="city in main.cityArray"> {{ city }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control" ng-model="selectWinnerTeam">
+                            <option value="">-- Select Winner Team --  </option>
+                            <option ng-value="team" ng-repeat="team in main.teamArray"> {{ team }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" ng-repeat="match in main.matches | filter: { season : selectSeason, winner : selectWinnerTeam , city : selectCity }">
+            <div class="card mb-4 box-shadow match">
+                <div class="card-header"><b>{{ match.team1 }}</b> vs <b>{{ match.team2 }}</b></div>
+                <div class="card-body">
+                    <p class="card-text">{{ match.winner }} won by <span ng-if="match.win_by_runs">{{ match.win_by_runs }} Runs</span><span ng-if="match.win_by_wickets">{{ match.win_by_wickets}} Wickets</span> </p>
+                    <small class="text-muted"><i class="fa fa-calendar"></i>&nbsp; {{ match.date | date:'d MMMM yyyy' }}</small><br>
+                    <small class="text-muted"><i class="fa fa-street-view"></i>&nbsp; {{ match.venue }} </small><br>
+                    <small class="text-muted"><i class="fa fa-location-arrow"></i>&nbsp; {{ match.city }} </small>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="btn-group">
+                            <a href="/match/{{ match._id }}" ng-show="!main.authorized" class="btn btn-sm btn-outline-secondary">View more &nbsp;<i class="fa fa-angle-double-right"></i> </a>
+                            <a href="/editMatch/{{ match._id }}" ng-show="main.authorized"class="btn btn-sm btn-outline-secondary">Edit Match &nbsp;<i class="fa fa-pencil"></i> </a>
+                        </div>
+                        <small class="text-muted">Season : {{ match.season }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

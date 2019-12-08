@@ -1,5 +1,6 @@
 // By Pankaj Tanwar ( 5 Dec 2019 )
 var User = require('../models/user');
+var Match = require('../models/match');
 let auth = require('../auth/authPermission');
 var jwt = require('jsonwebtoken');
 var secret = 'Indian-Cricket-League';
@@ -610,6 +611,26 @@ module.exports = function (router){
                 res.json({
                     success : true,
                     permission : user.permission
+                })
+            }
+        })
+    });
+
+    // get all matches
+    router.get('/getAllMatches', function (req, res) {
+
+        Match.find({ }).select('team1 team2 winner win_by_runs win_by_wickets date venue city season').lean().exec(function (err, matchesData) {
+            if(err) throw err;
+
+            if(!matchesData) {
+                res.json({
+                    success : false,
+                    message : 'Matches not found.'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    matches : matchesData
                 })
             }
         })

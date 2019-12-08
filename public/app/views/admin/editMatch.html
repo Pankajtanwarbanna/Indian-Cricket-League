@@ -1,0 +1,100 @@
+<h3 class="text-center">Edit Match !</h3>
+
+<div class="container-overview mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4 box-shadow match">
+                <div class="card-header"><b>{{ editMatch.match.team1 }}</b> vs <b>{{ editMatch.match.team2 }}</b></div>
+                <div class="card-body">
+                    <form ng-submit="editMatch.updateMatch(editMatch.match);">
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Team 1</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.team1" placeholder="Enter Team1 here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Team 2</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.team2" placeholder="Enter Team1 here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Season</small>
+                                <input type="number" class="form-control" ng-model="editMatch.match.season" placeholder="Enter season here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>City</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.city" placeholder="Enter city here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Toss Winner</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.toss_winner" placeholder="Enter Toss Winner here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Toss Decision</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.toss_decision" placeholder="Enter Toss Decision here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>DL Applied</small>
+                                <input type="number" class="form-control" ng-model="editMatch.match.dl_applied" placeholder="Enter DL applied here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Winner</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.winner" placeholder="Enter Winner here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Wins By Runs</small>
+                                <input type="number" class="form-control" ng-model="editMatch.match.win_by_runs" placeholder="Enter Wins by Runs here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Wins By Wickets</small>
+                                <input type="number" class="form-control" ng-model="editMatch.match.win_by_wickets" placeholder="Enter Win by Wickets here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Player of the Match</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.player_of_match" placeholder="Enter Player of the match here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Umpire 1</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.umpire1" placeholder="Enter Umpire1 here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Umpire 2</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.umpire2" placeholder="Enter Umpire2 here..">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Umpire 3</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.umpire3" placeholder="Enter Umpire3 here..">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Venue</small>
+                                <input type="text" class="form-control" ng-model="editMatch.match.venue" placeholder="Enter Venue here..">
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3" ng-show="editMatch.successMsg">
+                            <strong>Success!</strong> {{ editMatch.successMsg }}.
+                        </div>
+                        <div class="alert alert-danger mt-3" ng-show="editMatch.errorMsg">
+                            <strong>Oops!</strong> {{ editMatch.errorMsg }}.
+                        </div>
+
+                        <button type="submit" class="btn btn-success mt-3">Update Details</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

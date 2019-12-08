@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var apiRoutes = require('./app/routes/api')(router);
+var adminApiRoutes = require('./app/routes/adminApi')(router);
 
 app.use(morgan('dev'));
 // parse application/x-www-form-urlencoded
@@ -15,6 +16,8 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 // diff. front end and backend routes
 app.use('/api', apiRoutes);
+app.use('/adminApi',adminApiRoutes);
+global.__basedir = __dirname;
 
 // connecting to mongo database
 mongoose.connect('mongodb://localhost:27017/Indian-Cricket-League', { useNewUrlParser: true , useUnifiedTopology: true}, function (err) {

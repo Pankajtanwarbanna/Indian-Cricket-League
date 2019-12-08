@@ -17,8 +17,27 @@ angular.module('mainController', ['authServices'])
             app.home = false;
         } else {
             app.home = true;
-        }
+            user.getAllMatches().then(function (data) {
+                if(data.data.success) {
+                    app.matches = data.data.matches;
+                    app.seasonSet = new Set();
+                    app.teamSet = new Set();
+                    app.citySet = new Set();
+                    app.matches.forEach(function (match) {
+                        app.seasonSet.add(match.season);
+                        app.teamSet.add(match.team1);
+                        app.teamSet.add(match.team2);
+                        app.citySet.add(match.city);
+                    });
 
+                    app.seasonArray = Array.from(app.seasonSet);
+                    app.teamArray = Array.from(app.teamSet);
+                    app.cityArray = Array.from(app.citySet);
+                } else {
+                    app.errorMsg = data.data.message;
+                }
+            })
+        }
 
         if(auth.isLoggedIn()) {
 
