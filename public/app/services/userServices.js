@@ -61,5 +61,15 @@ angular.module('userServices',[])
         return $http.get('/api/getMatchDetails/' + matchID);
     };
 
+    // get user profile
+    userFactory.getUserProfile = function () {
+        return $http.get('/api/getUserProfile');
+    };
+
+    // update profile
+    userFactory.updateProfile = function (profile) {
+        return $http.post('/api/updateProfile', profile);
+    };
+
     return userFactory;
 });

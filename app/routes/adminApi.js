@@ -102,5 +102,22 @@ module.exports = function (router){
         })
     });
 
+    // get all users
+    router.get('/getAllUsers', auth.ensureAdmin, function (req,res) {
+        User.find({ }).select('username name email').exec(function (err, users) {
+            if(err) {
+                res.json({
+                    success : false,
+                    message : 'Something went wrong!'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    users : users
+                })
+            }
+        })
+    });
+
     return router;
 };

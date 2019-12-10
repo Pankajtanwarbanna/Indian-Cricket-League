@@ -23,12 +23,28 @@
                             <option ng-value="team" ng-repeat="team in main.teamArray"> {{ team }}</option>
                         </select>
                     </div>
+                    <div class="col-md-12">
+                        <small>{{ results.length }} results available</small>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6" ng-repeat="match in main.matches | filter: { season : selectSeason, winner : selectWinnerTeam , city : selectCity }">
+
+    <div class="row" ng-show="main.matchesLoading">
+        <div class="col-md-12 text-center">
+            <div class="card mb-4 box-shadow match">
+                <div class="card-body">
+                    <div class="spinner-border"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="!main.matchesLoading">
+
+        <div class="col-md-6" ng-repeat="match in results=(main.matches | filter: { season : selectSeason, winner : selectWinnerTeam , city : selectCity } | limitTo : main.limit )">
             <div class="card mb-4 box-shadow match">
                 <div class="card-header"><b>{{ match.team1 }}</b> vs <b>{{ match.team2 }}</b></div>
                 <div class="card-body">
@@ -39,13 +55,18 @@
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="btn-group">
                             <a href="/match/{{ match._id }}" ng-show="!main.authorized" class="btn btn-sm btn-outline-secondary">View more &nbsp;<i class="fa fa-angle-double-right"></i> </a>
-                            <a href="/editMatch/{{ match._id }}" ng-show="main.authorized"class="btn btn-sm btn-outline-secondary">Edit Match &nbsp;<i class="fa fa-pencil"></i> </a>
+                            <a href="/editMatch/{{ match._id }}" ng-show="main.authorized"class="btn btn-sm btn-outline-secondary"> Edit &nbsp;<i class="fa fa-pencil"></i> </a>
                         </div>
                         <small class="text-muted">Season : {{ match.season }}</small>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-12" ng-if="results.length >= 10">
+            <button ng-click="main.loadmore();" type="button" class="btn btn-outline-primary btn-lg btn-block">Load More</button>
+        </div>
     </div>
+
+
 </div>
 

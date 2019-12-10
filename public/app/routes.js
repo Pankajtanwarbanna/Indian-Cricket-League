@@ -83,8 +83,15 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 templateUrl : 'app/views/users/teams.html',
                 authenticated : true,
                 controller : 'teamsCtrl',
-                controllerAs : 'teams',
-                permission : 'user'
+                controllerAs : 'teams'
+            })
+
+            .when('/users', {
+                templateUrl : 'app/views/admin/users.html',
+                authenticated : true,
+                controller : 'usersCtrl',
+                controllerAs : 'users',
+                permission : 'admin'
             })
 
             .otherwise( { redirectTo : '/'});

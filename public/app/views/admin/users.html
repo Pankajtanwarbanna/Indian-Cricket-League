@@ -1,0 +1,32 @@
+<h3 class="text-center">All Users</h3>
+
+<div class="row mt-5" ng-show="users.usersLoading">
+    <div class="col-md-12 text-center">
+        <div class="card mb-4 box-shadow match">
+            <div class="card-body">
+                <div class="spinner-border"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive-sm mt-5" ng-show="!users.usersLoading">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users.allUsers">
+            <td>{{ $index + 1}}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

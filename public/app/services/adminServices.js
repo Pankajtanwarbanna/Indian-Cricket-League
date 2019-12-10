@@ -14,5 +14,10 @@ angular.module('adminServices',[])
         return $http.post('/adminApi/updateMatch', match);
     };
 
+    // get all users
+    adminFactory.getAllUsers = function () {
+        return $http.get('/adminApi/getAllUsers');
+    };
+
     return adminFactory;
 });

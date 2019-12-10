@@ -8,8 +8,16 @@ angular.module('adminCtrl',['adminServices','fileModelDirective','uploadFileServ
     var app = this;
 
     app.uploadCSVFile = function () {
+        app.loading = true;
         uploadFile.uploadCSV($scope.file).then(function (data) {
             console.log(data);
+            if(data.data.success) {
+                app.loading = false;
+                app.successMsg = data.data.message;
+            } else {
+                app.loading = false;
+                app.errorMsg = data.data.message;
+            }
         })
     }
 })
@@ -40,4 +48,23 @@ angular.module('adminCtrl',['adminServices','fileModelDirective','uploadFileServ
             }
         })
     }
+})
+
+
+.controller('usersCtrl', function (admin) {
+
+    var app = this;
+
+    app.usersLoading = true;
+
+    // get all users from database
+    admin.getAllUsers().then(function (data) {
+        if(data.data.success) {
+            app.usersLoading = false;
+            app.allUsers = data.data.users;
+        } else {
+            app.usersLoading = false;
+            app.errorMsg = data.data.message;
+        }
+    })
 });

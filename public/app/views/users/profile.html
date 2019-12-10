@@ -1,5 +1,35 @@
-<div class="page-header">
-    <h1>
-        User profile page
-    </h1>
+<h3>Hey {{ profile.profile.name }}! </h3>
+
+<div class="container-overview mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4 box-shadow match">
+                <div class="card-header">
+                    <b>Update your profile</b>
+                </div>
+                <div class="card-body">
+                    <form ng-submit="profile.updateProfile(profile.profile);">
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small>Name</small>
+                                <input type="text" class="form-control" ng-model="profile.profile.name" placeholder="Enter Your Name">
+                            </div>
+                            <div class="col-md-6">
+                                <small>Username</small>
+                                <input type="text" class="form-control" ng-model="profile.profile.username" placeholder="Enter Your Username">
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3" ng-show="profile.successMsg">
+                            <strong>Success!</strong> {{ profile.successMsg }}
+                        </div>
+                        <div class="alert alert-danger mt-3" ng-show="profile.errorMsg">
+                            <strong>Oops!</strong> {{ profile.errorMsg }}
+                        </div>
+
+                        <button type="submit" class="btn btn-success mt-3">Update Details</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -655,6 +655,54 @@ module.exports = function (router){
         })
     });
 
+    // get user profile
+    router.get('/getUserProfile', function (req, res) {
+        if(!req.decoded.email) {
+            res.json({
+                success :false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findOne({ email : req.decoded.email }).select('username name').exec(function (err, user) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        user : user
+                    })
+                }
+            })
+        }
+    });
+
+    // update profile
+    router.post('/updateProfile', function (req, res) {
+        if(!req.decoded.email) {
+            res.json({
+                success : false,
+                message : 'Please login.'
+            })
+        } else {
+            User.findByIdAndUpdate({ _id : req.body._id }, req.body, function (err) {
+                if(err) {
+                    res.json({
+                        success : false,
+                        message : 'Something went wrong!'
+                    })
+                } else {
+                    res.json({
+                        success : true,
+                        message : 'Profile updated.'
+                    })
+                }
+            })
+        }
+    })
+
     return router;
 };
 

@@ -1,7 +1,7 @@
 // by Pankaj Tanwar
 angular.module('mainController', ['authServices'])
 
-.controller('mainCtrl', function ($window,$http, auth, $timeout, $location, authToken, $rootScope, user) {
+.controller('mainCtrl', function ($window,$http , auth, $timeout, $location, authToken, $rootScope, user,$scope) {
 
     var app = this;
 
@@ -17,6 +17,7 @@ angular.module('mainController', ['authServices'])
             app.home = false;
         } else {
             app.home = true;
+            app.matchesLoading = true;
             user.getAllMatches().then(function (data) {
                 if(data.data.success) {
                     app.matches = data.data.matches;
@@ -24,16 +25,27 @@ angular.module('mainController', ['authServices'])
                     app.teamSet = new Set();
                     app.citySet = new Set();
                     app.matches.forEach(function (match) {
-                        app.seasonSet.add(match.season);
-                        app.teamSet.add(match.team1);
-                        app.teamSet.add(match.team2);
-                        app.citySet.add(match.city);
+                        if(match.season) {
+                            app.seasonSet.add(match.season);
+                        }
+                        if(match.team1) {
+                            app.teamSet.add(match.team1);
+                        }
+                        if(match.team2) {
+                            app.teamSet.add(match.team2);
+                        }
+                        if(match.city) {
+                            app.citySet.add(match.city);
+                        }
                     });
 
                     app.seasonArray = Array.from(app.seasonSet);
                     app.teamArray = Array.from(app.teamSet);
                     app.cityArray = Array.from(app.citySet);
+                    app.limit = 10;
+                    app.matchesLoading = false;
                 } else {
+                    app.matchesLoading = false;
                     app.errorMsg = data.data.message;
                 }
             })
@@ -114,5 +126,5 @@ angular.module('mainController', ['authServices'])
             $location.path('/');
         }, 2000);
     };
-
 });
+

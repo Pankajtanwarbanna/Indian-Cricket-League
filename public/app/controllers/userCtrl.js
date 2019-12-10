@@ -31,14 +31,39 @@ angular.module('userCtrl',['userServices'])
     };
 })
 
-.controller('profileCtrl', function () {
-    console.log('Profile controller is testing');
+.controller('profileCtrl', function (user, $timeout) {
+
+    var app = this;
+
+    // get user profile
+    user.getUserProfile().then(function (data) {
+        if(data.data.success) {
+            app.profile = data.data.user;
+        } else {
+            app.errorMsg = data.data.message;
+        }
+    });
+
+    // update user profile
+    app.updateProfile = function (profile) {
+        user.updateProfile(profile).then(function (data) {
+            if(data.data.success) {
+                app.successMsg = data.data.message;
+                $timeout(function () {
+                    app.successMsg = '';
+                }, 3000)
+            } else {
+                app.errorMsg = data.data.message;
+            }
+        })
+    }
 })
 
 .controller('teamsCtrl', function (user) {
     var app = this;
 
     app.fav = 'Sunrisers Hyderabad';
+    app.teamsLoading = true;
 
     user.getAllMatches().then(function (data) {
 
@@ -49,8 +74,10 @@ angular.module('userCtrl',['userServices'])
                 app.teamSet.add(match.team1);
             });
             app.teams = Array.from(app.teamSet);
+            app.teamsLoading = false;
         } else {
             app.errorMsg = data.data.message;
+            app.teamsLoading = false;
         }
     })
 })
