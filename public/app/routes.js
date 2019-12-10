@@ -71,7 +71,21 @@ var app = angular.module('userRoutes', ['ngRoute'])
                 permission : 'admin'
             })
 
+            .when('/match/:matchID', {
+                templateUrl : 'app/views/users/match.html',
+                authenticated : true,
+                controller : 'matchCtrl',
+                controllerAs : 'match',
+                permission : 'user'
+            })
 
+            .when('/teams', {
+                templateUrl : 'app/views/users/teams.html',
+                authenticated : true,
+                controller : 'teamsCtrl',
+                controllerAs : 'teams',
+                permission : 'user'
+            })
 
             .otherwise( { redirectTo : '/'});
 

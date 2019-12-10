@@ -6,7 +6,7 @@ angular.module('adminServices',[])
 
     // get details of the match
     adminFactory.getMatchDetails = function (matchID) {
-        return $http.get('/adminApi/getMatchDetails/' + matchID);
+        return $http.get('/api/getMatchDetails/' + matchID);
     };
 
     // update match details

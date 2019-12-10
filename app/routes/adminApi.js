@@ -85,25 +85,6 @@ module.exports = function (router){
         })
     });
 
-    // get details of a match
-    router.get('/getMatchDetails/:matchID', auth.ensureAdmin, function (req, res) {
-        Match.findOne({ _id : req.params.matchID }).lean().exec(function (err, match) {
-            if(err) throw err;
-
-            if(!match) {
-                res.json({
-                    success : false,
-                    message : 'Match not found.'
-                })
-            } else {
-                res.json({
-                    success : true,
-                    match : match
-                })
-            }
-        })
-    });
-
     // update match details
     router.post('/updateMatch', auth.ensureAdmin, function (req, res) {
         Match.findByIdAndUpdate({ _id : req.body._id }, req.body, function (err) {

@@ -30,7 +30,6 @@ angular.module('adminCtrl',['adminServices','fileModelDirective','uploadFileServ
     // update match details
     app.updateMatch = function (match) {
         admin.updateMatch(match).then(function (data) {
-            console.log(data);
             if(data.data.success) {
                 app.successMsg = data.data.message;
                 $timeout(function () {

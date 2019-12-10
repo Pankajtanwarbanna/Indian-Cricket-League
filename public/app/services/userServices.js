@@ -56,5 +56,10 @@ angular.module('userServices',[])
         return $http.get('/api/getAllMatches');
     };
 
+    // get details of the match
+    userFactory.getMatchDetails = function (matchID) {
+        return $http.get('/api/getMatchDetails/' + matchID);
+    };
+
     return userFactory;
 });

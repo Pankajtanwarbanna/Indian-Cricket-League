@@ -1,0 +1,99 @@
+<h3 class="text-center">Match Page</h3>
+
+<div class="container-overview mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4 box-shadow match">
+                <div class="card-header text-center"><b>{{ match.match.team1 }}</b> vs <b>{{ match.match.team2 }}</b> </div>
+                <div class="card-body">
+                    <p class="text-muted"><b>{{ match.match.date | date : 'd MMMM yyyy'}} </b>: {{ match.match.winner }} won by <span ng-if="match.match.win_by_runs">{{ match.match.win_by_runs }} Runs</span><span ng-if="match.match.win_by_wickets">{{ match.match.win_by_wickets}} Wickets</span></p>
+
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>Team 1</small>
+                            <p><i class="fa fa-users text-primary"></i> &nbsp; {{ match.match.team1 }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Team 2</small>
+                            <p><i class="fa fa-users text-primary"></i> &nbsp;{{ match.match.team2 }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>Season</small>
+                            <p><i class="fa fa-clock-o text-primary"></i> &nbsp;{{ match.match.season }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>City</small>
+                            <p><i class="fa fa-map-marker text-primary"></i> &nbsp;{{ match.match.city }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>Toss Winner</small>
+                            <p><i class="fa fa-star text-primary"></i> &nbsp;{{ match.match.toss_winner }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Toss Decision</small>
+                            <p><i class="fa fa-star text-primary"></i> &nbsp;{{ match.match.toss_decision }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>DL Applied</small>
+                            <p><i class="fa fa-ticket text-primary"></i> &nbsp;{{ match.match.dl_applied }} DL</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Winner</small>
+                            <p><i class="fa fa-trophy text-primary"></i> &nbsp;{{ match.match.winner }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6" ng-if="match.match.win_by_runs">
+                            <small>Win By Runs</small>
+                            <p><i class="fa fa-trophy text-primary"></i> &nbsp;{{ match.match.win_by_runs }} Runs</p>
+                        </div>
+                        <div class="col-md-6" ng-if="match.match.win_by_wickets">
+                            <small>Wins By Wickets</small>
+                            <p><i class="fa fa-trophy text-primary"></i> &nbsp;{{ match.match.win_by_wickets }} Wickets</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Result</small>
+                            <p><i class="fa fa-trophy text-primary"></i> &nbsp;{{ match.match.result }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>Player of the Match</small>
+                            <p><i class="fa fa-user-secret text-primary"></i> &nbsp;Mr. {{ match.match.player_of_match }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Umpire 1</small>
+                            <p><i class="fa fa-user text-primary"></i> &nbsp;Mr. {{ match.match.umpire1 }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>Umpire 2</small>
+                            <p><i class="fa fa-user text-primary"></i> &nbsp;Mr. {{ match.match.umpire2 }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Umpire 3</small>
+                            <p><i class="fa fa-user text-primary"></i> &nbsp;Mr. {{ match.match.umpire3 }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <small>Venue</small>
+                            <p><i class="fa fa-street-view text-primary"></i> &nbsp;{{ match.match.venue }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Date</small>
+                            <p><i class="fa fa-calendar-o text-primary"></i> &nbsp;{{ match.match.date | date : 'd MMMM yyyy' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

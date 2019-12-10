@@ -35,7 +35,7 @@
                     <p class="card-text">{{ match.winner }} won by <span ng-if="match.win_by_runs">{{ match.win_by_runs }} Runs</span><span ng-if="match.win_by_wickets">{{ match.win_by_wickets}} Wickets</span> </p>
                     <small class="text-muted"><i class="fa fa-calendar"></i>&nbsp; {{ match.date | date:'d MMMM yyyy' }}</small><br>
                     <small class="text-muted"><i class="fa fa-street-view"></i>&nbsp; {{ match.venue }} </small><br>
-                    <small class="text-muted"><i class="fa fa-location-arrow"></i>&nbsp; {{ match.city }} </small>
+                    <small class="text-muted"><i class="fa fa-map-marker"></i>&nbsp; {{ match.city }} </small>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="btn-group">
                             <a href="/match/{{ match._id }}" ng-show="!main.authorized" class="btn btn-sm btn-outline-secondary">View more &nbsp;<i class="fa fa-angle-double-right"></i> </a>

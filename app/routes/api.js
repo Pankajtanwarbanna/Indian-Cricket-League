@@ -636,6 +636,25 @@ module.exports = function (router){
         })
     });
 
+    // get details of a match - can be used by admin and user both
+    router.get('/getMatchDetails/:matchID', function (req, res) {
+        Match.findOne({ _id : req.params.matchID }).lean().exec(function (err, match) {
+            if(err) throw err;
+
+            if(!match) {
+                res.json({
+                    success : false,
+                    message : 'Match not found.'
+                })
+            } else {
+                res.json({
+                    success : true,
+                    match : match
+                })
+            }
+        })
+    });
+
     return router;
 };
 

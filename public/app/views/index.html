@@ -73,6 +73,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="/teams" ng-show="main.isLoggedIn"> <i class="fa fa-users"></i>&nbsp; Teams</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="/profile" ng-show="main.isLoggedIn">Hello {{ main.name }} </a>
                 </li>
 
@@ -85,9 +89,20 @@
     </nav>
     <main role="main" class="container">
         <div class="ng-view mt-5"></div>
-        <div ng-show="main.home" class="mt-5">
+        <div ng-show="main.home && main.isLoggedIn" class="mt-5">
             <home ng-include="'/app/views/home/home.html'"></home>
         </div>
+
+        <footer class="page-footer font-small blue mt-5">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3"> Made with <i class="text-danger fa fa-heart"></i>
+                <a href="/pankajtanwarbanna"> Pankaj Tanwar </a>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
     </main>
 
     <!-- Footer -->
